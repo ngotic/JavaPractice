@@ -31,7 +31,8 @@ public class Ex90_Lambda {
 		*    표준 API 함수형 인터페이스
 		*    1. Comsumer
 		*    	- Consumer<T>
-				- BiConsumer<T, U>				
+				- BiConsumer<T, U>	
+							
 		*    2. Supplier
 		*    	- Supplier<T>
 		*    
@@ -59,6 +60,7 @@ public class Ex90_Lambda {
 		//m4();
 		//m5();
 		m6();
+		
 		
 	}   
 

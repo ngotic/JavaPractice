@@ -1,8 +1,24 @@
 package com.test.lambda;
 
+import java.awt.event.ActionListener;
+import java.util.function.Consumer;
+
 public class Ex87_lambda {
 
 	public static void main(String[] args) {
+		
+		
+		
+//		Consumer
+//		Object obj = new Object() {
+//			int max(int a, int b){
+//		    	return a > b ? a : b;
+//		    }
+//		};
+		
+		
+		
+		
 		/*
 		 람다식, Lambda Expression
 		 - 함수형 프로그래밍 방식을 지원하는 표현식이다.
@@ -18,10 +34,11 @@ public class Ex87_lambda {
 		 
 		 - 람다식을 저장하는 인터페이스는 반드시 Functional Interface이어야 가능핟.(추상메서드를 딱 1개만 가져야 한다.)
 		 - 그렇지 않으면 람다가 어떤 메서드인지 매칭할 방법이 없다. 
-		 
 		*/
 		//요구사항] MyInterface를 구현한 객체를 생성하시오.
+			
 		
+	
 		//1. 클래스 + 객체
 		MyInterface m1 = new MyClass();
 		m1.test();
@@ -32,7 +49,8 @@ public class Ex87_lambda {
 			public void test() {
 				System.out.println("익명 클래스에서 구현한 메서드");
 			}
-		}; // 반드시 인터페이스가 시킨 추상메서드를 구현해야 한다. 
+		}; // 반드시 인터페이스가 시킨 추상메서드를 구현해야 한다.
+		
 		m2.test(); // 요만큼의 코딩이
 		
 		//3. 람다식  m2를 람다식 m3로 만든 사례
@@ -58,15 +76,15 @@ public class Ex87_lambda {
 		};
 		
 		// 3. 람다식은 메서드 하나를 정의하는 문법이다. 어떻게 2개이상 정의를 해?!!
-		TestInterface t2 = () -> {
+		//TestInterface t2 = () -> {
 			// aaa() vs bbb() 야? >> 람다식은 aaa()를 구현하는건지 bbb()를구현하는건지 모른다.
-		}; // 이건 안된다. 익명객체를 썼을 떄 람다식 썼을떄 차이점이다.
+		//}; // 이건 안된다. 익명객체를 썼을 떄 람다식 썼을떄 차이점이다.
 		// 람다식은 하나라서 aaa인지 bbb인지 모른다.
 		// The target type of this expression must be a functional interface
 		// 이 표현식의 타겟 타입은 반드시 functional Interface라 한다.
 		
-		t2.aaa();
-		t2.bbb(); // 둘다 보이는데 
+//		t2.aaa();
+//		t2.bbb(); // 둘다 보이는데 
 		
 		
 //		//2. 익명 객체를 만드는 문법을 훨신 더 간단하게 만들어주기 위해 람다식을 쓴다.
@@ -150,9 +168,7 @@ public class Ex87_lambda {
 //		};
 		
 		// 없거나 2개 이상일 떄 생략불가 
-		NoParameterReturn pr11 = () -> {
-			return 100;
-		};
+		NoParameterReturn pr11 = () -> 100 ;
 		System.out.println("pr11: "+ pr11.call());
 		
 		// ** 구현부에 'return문이 유일'하면, { }와 return을 생략할 수 있다.

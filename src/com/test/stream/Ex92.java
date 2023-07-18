@@ -6,13 +6,11 @@ import java.util.LinkedList;
 public class Ex92 {
 
 	public static void main(String[] args) {
-		//m1();
-		m2();
+		m1();
+		// m2();
 	}
 
 	private static void m2() {
-		
-		
 		
 		LinkedList<Student> ll = new LinkedList<Student>();
 		
@@ -47,11 +45,7 @@ public class Ex92 {
 		// hashCode, equals를 정의하니까 이젠 set에 중복 필터가 된다.
 		System.out.println(set2);  // 이제 두개만 들어감 
 		
-		
-		
-		
-		
-		
+		// ★ ★ ★ ★  Set에도 결국에는 구분을 하기 위해서 HashCode와 equals를 정의해야 한다. 
 	}
 
 	private static void m1() {
@@ -96,10 +90,11 @@ public class Ex92 {
 		// hashCode를 손봣다 > t1과 t3가 동일한 것으로 나왔다.
 		// 그런데도 아직은 t1.equals(t3)의 결과가 false이다. 
 		// 여기서 equals를 건드려야 한다.
-		
 		// eqauls를 이제 고쳤다. >return this.hashCode() == obj.hashCode(); 라고
 		System.out.println(t1.equals(t3)); // 이제는 true가 되었다. 내가 뜯어 고침
 		
+		
+		//★ 동일 여부를 결정하는 > HashCode와 equals
 	}
 
 }
@@ -147,20 +142,20 @@ class Student {
 		return "Student [name=" + name + ", age=" + age + ", gender=" + gender + "]";
 	}
 //
-//	@Override
-//	public int hashCode() { //
-//		// 이름 == 이름
-//		// 나이 == 나이
-//		// 성별 == 성별
-//		// System.out.println(this.name + this.age + this.gender);
-//		return (this.name + this.age + this.gender).hashCode();
-//	}
-//	// 홍길동20남자 과 홍길동20남자는 같은 애를 참조한다. 저 3개의 멤버션수를 가지고 새로운 문자를 만듬
-//	
-//	@Override 
-//	public boolean equals(Object obj) {
-//		return this.hashCode() == obj.hashCode();
-//	}
+	@Override
+	public int hashCode() { //
+		// 이름 == 이름
+		// 나이 == 나이
+		// 성별 == 성별
+		// System.out.println(this.name + this.age + this.gender);
+		return (this.name + this.age + this.gender).hashCode();
+	}
+	// 홍길동20남자 과 홍길동20남자는 같은 애를 참조한다. 저 3개의 멤버션수를 가지고 새로운 문자를 만듬
+	
+	@Override 
+	public boolean equals(Object obj) {
+		return this.hashCode() == obj.hashCode();
+	}
 }
 
 

@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -72,7 +74,7 @@ public class Ex91_Stream {
 		   	  - 반환값 > 스트림이 아닌 다른 자료형을 반환 or void
 		   	  
 		   필터링
-		   - filter() 파이프
+		   - filter() 파이프 > predicate 
 		   - 중간 파이프
 		   - 앞의 스트림의 값들을 받아서 > 검사 > 조건을 만족하는 요소만 남겨 > 스트림 생성
 		   
@@ -102,18 +104,20 @@ public class Ex91_Stream {
 		   - 앞의 스트림의 값들을 받아서 소비 !!
 		   
 		   매칭
-		   - allMatch(), anyMatch(), noneMatch()
+		   - allMatch(), anyMatch(), noneMatch() 
 		   - 최종 파이프
 		   - a. boolean : allMatch(Predicate:인자값) : 모든 요소가 만족하는가?(&&)
 		   - b. boolean : anyMatch(Predicate:인자값) : 일부 요소가 만족하는지?(||)
 		   - c. boolean : noneMatch(Predicate)     : 모든 요소가 불만족하는지?    
 		   
-		   집계, Reduce
+		   집계, Reduce 
 		   - count(), max(), min(), sum(), avg() : 개수 세는거 최대, 최소, 누적, 평균 이런거
 		   - 최종 파이프
 		   - 앞의 스트림의 값들을 받아서 > 통계값
 		   
-		   
+		   // ★ 최종 파이프의 집계! 값이 하나 나온다.!!!! 
+
+ 
 		   
 		*/
 		
@@ -126,11 +130,22 @@ public class Ex91_Stream {
 		// m7();
 		// m8();
 		// m9();
-		m10();
+		 m10();
+		
 
 	}// main 
 	
 	private static void m10() {
+		
+		
+		// Optional.of(값); 으로 저장하고
+		// op.get(); get()으로 꺼낸다.
+		
+		Optional<Integer> op = Optional.of(10); // 숫자를 넣을 때 
+		// Optional<Integer> op = null; // 이것도 가능하다. 
+		System.out.println(op+", "+op.get()); //Optional[10]
+		
+		
 		// Optional<T>
 		// - 값형 자료형을 취급하지만 null을 가질 수 있다.
 		// - 값형에도 null을 넣고 싶다해서 만든 자료형이다.
@@ -141,6 +156,7 @@ public class Ex91_Stream {
 			System.out.println("나이 : " + age);
 		else 
 			System.out.println("회원이 없어요.");
+		
 		// 걍 숫자 Integer다 라고 보면 마음에 편하다.
 //		Optional<Integer> num = getNum("아무개"); // 리턴 값이 그냥 integer면 안된다.
 //		// Optional<Integer> num = getNum("없는사람");
@@ -152,9 +168,10 @@ public class Ex91_Stream {
 //		
 		// 애매하다... 사용 방법이... 
 		
-
 		List<Integer> list = Data.getIntList(0);
 		System.out.println(list);
+		
+		
 		
 		int max = Integer.MIN_VALUE; // list 안의 모든 숫자들 중에 가장 작은 숫자 - 1
 		int min = Integer.MAX_VALUE ; // 가장 큰 숫자 더하기 1
@@ -174,23 +191,31 @@ public class Ex91_Stream {
 		
 		// 숫자가 없는것을 고려해서 > List<Integer> list = Data.getIntList(0); 
 		// >  이면 값이 없으니까 Optional.empty 반환
-		System.out.println(list.stream().max( (a, b) -> a-b) ); // 리턴값이 Optional
+		
+		System.out.println(list.stream().max((a, b) -> a-b)); // 리턴값이 Optional
+		
 		// 값이 있으면 Optional[86] 이런식으로 숫자인데 없으면 뭘로 주기 애매해니까 비어있다라는 의사표현함
 		// 데이터가 없을 때 >>>>> 결과를 반환하고 싶어 근데 null을 줄까? 아니 int형으로 반환해야 하는데?
-		// 최대나 최소를 주기도 하지만 값을 못찾았을 경우도 돌려준다는 것 ] 
+		// 최대나 최소를 주기도 하지만 값을 못찾았을 경우도 돌려준다는 것 ]
+		
+		// ★★★★ Stream으로 결과를 줄 때 옵션이 없으면 Optional.empty도 준다. 
 		
 	
 		// Optional<Integer>
 		// - Integer, int 타입과 동일한 자료형
 		// - null을 가질 수 있다.
 		Optional<Integer> result = list.stream().max( (a, b) -> a - b );
+		
 		if (result.isPresent()) { // 미리 한번 알수가 있다.
 			System.out.println(">"+result.get()); // get으로 뽑아내면 된다. > empty()면 에러난다.
 		}
 		
-		System.out.println(Data.getUserList().stream().max((a, b) -> a.getHeight() - b.getHeight()).get());
+		
+		// min이나 max 둘다 옵셔녈이다. 
+		
+		System.out.println("****"+Data.getUserList().stream().max((a, b) -> a.getHeight() - b.getHeight()).get());
 		// 유저 한명을 리턴한다.
-		System.out.println(Data.getUserList().stream().min((a, b) -> a.getWeight() - b.getWeight()).get());
+		System.out.println("****"+Data.getUserList().stream().min((a, b) -> a.getWeight() - b.getWeight()).get());
 		// 유저 한명 리턴
 		
 		// ★ 모든 타입 지원
@@ -201,9 +226,12 @@ public class Ex91_Stream {
 		
 		// Strema<Integer> > 변환 > IntStream
 		// mapToInt는 IntStream을 반환한다. 그래서 mapToInt로 변환하는 작업을 한다. 값은 고대로 들고 말이다.
-		System.out.println(Data.getIntList(5).stream().mapToInt( num -> num ).sum());
+		System.out.println(Data.getIntList(5).stream().mapToInt( num -> num ).sum()); // sum은 인트형이다.
 		
-		System.out.println(Data.getIntList(5).stream().mapToInt( num -> num ).average());
+		
+		System.out.println(",,,,"+Data.getIntList(5).stream().mapToInt( num -> num ).average()); // 리턴값이 OptionalDouble이다.
+		System.out.println(",,,,"+Data.getIntList(5).stream().mapToInt( num -> num ).average().getAsDouble());// 이러면 더블로 꺼내진다. 
+		
 		
 		Data.getUserList().stream().mapToInt(user -> user.getWeight()).forEach(num -> System.out.println(num));
 		
@@ -213,6 +241,7 @@ public class Ex91_Stream {
 				.mapToInt(user -> user.getWeight()).average().getAsDouble()     //
 				////////////////// IntStream으로 바꾸고 ////////////////////////////// 
 				);
+		// mapToInt는 함수계열
 		
 		
 		
@@ -221,6 +250,9 @@ public class Ex91_Stream {
 
 	private static Optional<Integer> getNum(String name) {
 		
+		
+		// Optional.empty()는 이건 null이다. 
+		// get()으로 값을 꺼낼 수 있다. 
 		Optional<Integer> num = Optional.empty(); // null로 초기화가 가능하다. 이게 참조형이라 가능 
 		
 		if(name.equals("홍길동")) {
@@ -267,13 +299,10 @@ public class Ex91_Stream {
 		System.out.println(cnt); 
 		              
 		// 끝에다가 최종 집계 메서드 붙인다.
-		cnt = Data.getUserList().stream().filter(user->user.getHeight() >= 175).count();
+		cnt = Data.getUserList().stream().filter(user -> user.getHeight() >= 175).count();
 		System.out.println(cnt);
 		System.out.println();
 		System.out.println();
-		
-		
-		
 		
 		
 		/*< 여기까지 정리 >*/
@@ -322,6 +351,8 @@ public class Ex91_Stream {
 			System.out.println("홀수 발견!!");
 		}
 
+		
+		
 		// 이게 all true면 true를 리턴, 5개의 숫자에 대해서 이 검사를 한다. 
 		result = Arrays.stream(nums).allMatch( n -> n % 2 ==0 );
 		                      // 모든 요소가 만족할 때
@@ -371,9 +402,10 @@ public class Ex91_Stream {
 		System.out.println();
 		
 		Data.getIntList(10).stream()
-		                   .sorted()
+		                   .sorted() // 중간 필터다 sorted
 		                   .forEach( num->System.out.println(num) );
 		System.out.println();
+		
 		
 		Data.getIntList(10).stream()
 						   .sorted( (a, b) -> b - a) 
@@ -381,27 +413,35 @@ public class Ex91_Stream {
 						   .forEach(num -> System.out.println(num));
 		System.out.println();
 		
+		
+		// Sort할 때 2차 정렬 안된다.  
 		Data.getItemList().stream()
 						  .sorted( (a, b) -> a.getName().compareTo(b.getName()) ) // 얘는 뭘 기준으로 정렬하는지 몰라> 그래서 이 안에 정렬조건을 개입해라
-		   //> 2차정렬 x // .sorted( (a, b) -> a.getSize() - b.getSize() ) // 이렇게하면 이름도 엉망됨 이건 사이즈로만 정렬됨> 앞의 상태를 보존하지 않음 > 자기가 다시 사이즈로 정렬 
+		//> 2차정렬 x // .sorted( (a, b) -> a.getSize() - b.getSize() ) // 이렇게하면 이름도 엉망됨 이건 사이즈로만 정렬됨> 앞의 상태를 보존하지 않음 > 자기가 다시 사이즈로 정렬 
 						  .forEach(item -> System.out.println(item));
 		System.out.println();
 		
 		
 		List<Integer> list = Data.getIntList(10);
 		System.out.println(list);
+		
 		Collections.sort(list);                 // 오름차순
-		Collections.sort(list, (a, b)-> b - a); // 내림차순
+		Collections.sort(list, ( a, b)-> b - a); // 내림차순
 		
 		list.sort((a,b) -> a-b );               // 오름차순
 		list.sort((a,b) -> b-a );               // 내림차순
+		
 		//  ---------- 이걸 쓰는 경우도 ----- 있다.
 		list.sort(Comparator.naturalOrder());   // 오름차순 > 람다 객체랑 같다.
 		list.sort(Comparator.reverseOrder());   // 내림차순 > 객체
 		
+			
+		
+		
+		// distinct(), filter(), sorted() 세개 다쓴다. 
 		Data.getIntList().stream()
 						 .distinct()
-						 .filter( n -> n%2 ==0)
+						 .filter( n -> n % 2 ==0) // true / false
 						 .sorted()
 						 .forEach(n ->System.out.println(n));
 		
@@ -411,21 +451,18 @@ public class Ex91_Stream {
 		Boolean answer3 = list.stream().noneMatch( a -> a < 0 ); // 하나도 안되는가
 		System.out.println(">"+answer+", "+answer2+","+answer3);
 		
+		
+		
+		// 최종파이프다. 
 		// AllMatch()
 		// AnyMatch()
 		// NoneMatch()
-		
-		
 		
 		
 	}
 
 	private static void m6() {
 		List<String> list = Data.getStringList(10);
-		
-		
-		
-		
 		
 		
 		System.out.println(list);
@@ -436,12 +473,16 @@ public class Ex91_Stream {
 		System.out.println();
 		
 		list.stream()     //Stream<String> 원본
-			.map(word -> word.length()) //String<Integer> Output
+			.map( word -> word.length()) //String<Integer> Output
 			.forEach(num -> System.out.printf("%3d", num)); //결국 %d > 숫자를 for문을 돌렸다.
 		                         // 그 길이만을 모아서 integer Stream을 모았다.
 		// 그래서 얘를 변환 파이프라고 한 것 앞에는 온데간데 사라진다.
 		// 문자열 가공, 문자열은 버리고 숫자만 남긴다.
 		System.out.println();
+		
+		
+		// map은 결과값 고대로 다음 파이프의 인풋으로 준다. 
+		
 		
 		list.stream()
 			.map(word -> word.substring(0, 2)) //  타입 변환을 할 수가 있다.
@@ -468,7 +509,7 @@ public class Ex91_Stream {
 			System.out.println(name.getFirstName() + ", " + name.getLastName());
 		}
 		
-		
+		// Arrays.stream() 
 		Arrays.stream(names)
 			  .map(name -> {
 				 String firstName = name.substring(1);   // 이름
@@ -480,6 +521,7 @@ public class Ex91_Stream {
 			  }).forEach(name -> {
 				  System.out.println(name.getFirstName() + "," + name.getLastName());
 			  });
+		
 		System.out.println();
 		
 		
@@ -487,14 +529,16 @@ public class Ex91_Stream {
 		.stream()
 		.map( num -> 1) // 어떤 숫자가 와도 1로 변환한 것이다. 이건 상수 변환꼴이다. 어떤 값이 와도 고정된 상수하나를 돌려줌
 		.forEach(n -> System.out.println(n)); // 뭔가 변환을 했는데 쓸모가 없는 맵핑
+		
 		System.out.println();
 		
 		Data.getUserList().stream()
 						  .forEach(user -> System.out.println(user.getName()));
+		
 		System.out.println();
 		
 		Data.getUserList().stream()
-						  .map( user->user.getName() ) // 이름만 넘어온다.
+						  .map( user -> user.getName() ) // 이름만 넘어온다.
 						  .forEach( name-> System.out.println(name));
 			                     // 이름을 받고          이름을 출력
 		System.out.println();    // 책임의 소재를 컨트롤 한다.
@@ -525,19 +569,29 @@ public class Ex91_Stream {
 		// - ArrayList > (변환) > HashSet
 		Set<Integer> set2 = new HashSet<Integer>(list); // Collection을 달라지만 결국은
 		                    // ArrayList나 LinkedList를 넣어도 되는 것이다.
+		// ArrayList나 LinkedList를 HashSet의 생성자로 넣는다. 단 제네릭은 맞추고
+		
 		System.out.println(set2);
 		System.out.println();
 		
 		//Case 3.
 		list.stream()
-				.distinct() // 중복값 제거
+				.distinct() // 중복값 제거> 필터 
 				.forEach(num -> System.out.printf("%4d", num));
+		
 		System.out.println();
 		
 		Data.getStringList().stream()
 						    .filter( word -> word.length() > 5 )
 						    .distinct()                  // 중간 파이프를 낌
 						    .forEach( word -> System.out.println(word));
+		
+		System.out.println("-------------");
+		
+		Data.getStringList().stream()
+		.distinct()                  // 중간 파이프인데 순서 상관없다 어차피 function 이라
+	    .filter( word -> word.length() > 5 )
+	    .forEach( word -> System.out.println(word));
 		System.out.println();
 		
 		// 경품행사
@@ -556,6 +610,9 @@ public class Ex91_Stream {
 		slist.add(new Student("다다다", 20, "남자"));
 		slist.add(new Student("홍길동", 20, "남자"));
 		slist.add(new Student("홍길동", 20, "남자"));
+		
+		
+		// hashCode()와 equals() 정의 유무가 중요하다. 
 		
 		slist.stream()   // hashCode(), equals()를 정의를 안하면 5개가 나온다.
 			 .distinct() // hashCode(), equals()를 정의해야 distinct로 구별이 된다.
@@ -606,11 +663,11 @@ public class Ex91_Stream {
 				return false;
 			}
 		// ---------------------------------------------
-		}).forEach(num -> System.out.printf("%4d", num));
+		}).forEach( num -> System.out.printf("%4d", num) );
 		// forEach는 앞의 스트림을 받아서 소비한다.
 		
 		System.out.println();
-		
+							// 여긴 function의 test가 들간다. 
 		list.stream().filter( num -> num % 2==0 ).forEach(num-> System.out.printf("%4d", num) );
 		System.out.println();
 		
@@ -633,12 +690,14 @@ public class Ex91_Stream {
 		
 		System.out.println();
 		
+		
+		// 중간 파이프를 또 여러번 쓸 쑤 있다. 
 		Data.getUserList().stream()
 							.filter(user -> user.getGender() == 1)
 							.filter(user -> user.getHeight() >= 180)
 							.filter(user -> user.getWeight() >= 80)
 							.forEach(user -> System.out.println(user));
-		
+		// 중간 파이프를 또 여러번 쓸 쑤 있다.
 		System.out.println();
 		
 		
@@ -668,10 +727,13 @@ public class Ex91_Stream {
 		nums2.add(1000);
 		nums2.add(2000);
 		nums2.add(3000);
-		// 지역변수에 있는 변수명만 쓰지 마라
+		
+		// ★★ 지역변수에 있는 변수명만 쓰지 마라
 		nums2.stream().forEach( num->System.out.println());
 		
-		HashSet<Integer> nums3 = new HashSet<Integer>();
+		
+		// ★★ HashSet도 stream이 있다. 
+		Set<Integer> nums3 = new HashSet<Integer>();
 		nums3.add(10000);
 		nums3.add(20000);
 		nums3.add(30000);
@@ -690,7 +752,7 @@ public class Ex91_Stream {
 		Arrays.stream(nums4); // 여기엔 stream이 있다.
 		Arrays.stream(nums4).forEach( num -> System.out.println(num) ); 
 		// 내부적으로 intConsumer로 들어가있다. / 범용 Consumer가 아니다.
-	
+		
 		
 		//3. 숫자범위로부터
 		// - Stream<T>: 범용 스트림
@@ -707,16 +769,19 @@ public class Ex91_Stream {
 		
 		//4. 파일로부터 얻어내는 것
 		// - 파일 읽기
+		// ★ 파일 내용에 대해 스트림
+		// ★ 파일들에 대한 스트림으로 출력
 		try {
 			
 			Path path = Paths.get(".\\dat\\user.txt"); // 우리가 읽고 싶은 곳의 경로가 있다.
 			Files.lines(path).forEach(line -> System.out.println(line));
+			// Files.lines // 파일들 읽은것에 대한 
+			
 			System.out.println();
 			
 			//5. 디렉토리로부터
 			// - 목록보기 > dir.listFiles()
 			Path dir = Paths.get("c:\\class\\dev\\eclipse");
-			
 			Files.list(dir).forEach( p-> {
 				System.out.println(p.getFileName());
 				System.out.println(p.toFile().length()); 
@@ -729,7 +794,7 @@ public class Ex91_Stream {
 		}
  	}
 
-	private static void m2() {
+	private static void m2() { // Consumer 예제만 있네 
 		
 		// 배열(컬랙션) 탐색
 		List<Integer> list = Data.getIntList(10);
@@ -750,12 +815,13 @@ public class Ex91_Stream {
 		//3. Iterator 
 		Iterator<Integer> it= list.iterator();
 		
+			
 		while(it.hasNext()) {
 //			Integer n = it.next();
 			System.out.printf("%5d", it.next());
 		}
 		
-		//4. stream // stream이라는 이름의 메서드가 나온다.
+		//4. stream // stream이라는 이름의 메서드가 나온다. > 리스트에 Stream이라는 메서드가 있다. 
 		Stream<Integer> stream = list.stream(); //****
 		
 		System.out.println(stream); //java.util.stream.ReferencePipeline$Head@2ed94a8b
@@ -764,7 +830,17 @@ public class Ex91_Stream {
 		Consumer<Integer> c1 = num -> System.out.println(num);
 		c1.accept(10); // 하나  
 		
-		stream.forEach(c1); //Consumer<? super T> 를 달래...
+		
+		List<Integer> myList = new ArrayList();
+		
+		for(int i=0 ; i< 10; i++) {
+			myList.add((int)(Math.random()*20)+1 );
+		}
+		
+		myList.forEach( num -> System.out.println(num) );
+		
+		stream.forEach(c1); 
+		// Consumer<? super T> 를 달래...
 		// 배열 안에 데이터를 하나씩 탐색하는 메서드다. 
 		// stream 자체가 list의 stream()을 받음
 		// list니까 요소마다 돈다. 즉 이 요소의 값을
@@ -790,6 +866,7 @@ public class Ex91_Stream {
 		List<Double> list2 = Data.getDoubleList(10);
 		Stream<Double> stream2 = list2.stream();
 		Consumer<Double> c2 = num -> System.out.println(num);
+		
 		stream2.forEach(c2); // 
 		// list의 stream();
 		// stream().forEach(객체); 
@@ -841,10 +918,8 @@ public class Ex91_Stream {
 		System.out.println(Arrays.toString(txt1));
 		
 		
-		
 		User[] ulist = Data.getUserArray(); // com.test.data user
 		System.out.println(Arrays.toString(ulist));
-		
 		
 		// 데이터 만들기 귀찮으니까 미리 만들어놓은 것
 		Item[] ilist = Data.getItemArray();
