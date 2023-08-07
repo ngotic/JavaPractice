@@ -156,6 +156,8 @@ class Student {
 	public boolean equals(Object obj) {
 		return this.hashCode() == obj.hashCode();
 	}
+	
+	// ★ 중요! >> HashCode를 설계하고 그 기준대로 equals를 설계한다. 
 }
 
 

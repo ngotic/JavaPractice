@@ -30,7 +30,7 @@ public class Q062 {
 			System.out.print("학생명: ");
 			names[i] = scan.nextLine();
 		}
-		// Arrays.sort(names, new MyComparator() ); // 역순, 대소문자 구분 x
+		Arrays.sort(names, new MyComparator() ); // 역순, 대소문자 구분 x
 		//Arrays.sort(names);
 		// mySort(names);
 		// System.out.println(Arrays.toString(names));

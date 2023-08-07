@@ -106,7 +106,7 @@ public class Ex89_lambda {
 			}
 			System.out.println();
 
-			// 나이순 정렬 Int는 - 연산자!
+			// ★ 나이순 정렬 Int는 - 연산자!
 			list.sort((u1, u2) -> u1.getAge() - u2.getAge());
 
 			for (User user : list) {
@@ -114,7 +114,7 @@ public class Ex89_lambda {
 			}
 			System.out.println();
 
-			// 이름순 정렬 : String이니까 compareTo를 쓰는 것
+			// ★ 이름순 정렬 : String이니까 compareTo를 쓰는 것
 			list.sort((u1, u2) -> u1.getName().compareTo(u2.getName()));
 
 			// 성별순

@@ -2,6 +2,7 @@ package com.test.java;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 
 public class Ex34_Array {
 
@@ -212,10 +213,26 @@ public class Ex34_Array {
 
 	private static void m15() {
 		// 자바의 정렬 기능 사용
-		int[] nums = { 5, 3, 1, 4, 2 };
-
-		Arrays.sort(nums); // 정렬은 Quick 정렬 알고리즘을 쓴다. // 보통 다른 언어는 reverse라는 이름으로 기능을 제공함.
-		// Arrays.sort(nums, (a, b)-> a > b );
+		int[] nums = { 5, 3, 1, 4, 2 }; // 참조형이 아니다. 기본형이다. 
+		
+		// Arrays.sort(nums, (a, b) -> a > b ); // 안됨
+		
+//		Arrays.sort(nums, new Comparator<int>() { // 원시 타입이라 제네릭도 안된다.
+//			@Override
+//			public int compare(int o1, int o2) { // 결국은 이게 안된다. 
+//				return o2-o1;
+//			}
+//		});
+		
+		// 이건 된다. > 결국엔 원시타입을 래퍼타입으로 바꾸고 위처럼 해야 된다는 것. 
+		Integer[] dnums = new Integer[] { 5, 3, 1, 4, 2 };
+		Arrays.sort(dnums, Comparator.reverseOrder());
+		
+		
+		Arrays.sort(nums); // 해당 일부분만 정렬도 가능하다. 
+		
+		// Arrays.sort(nums); // 정렬은 Quick 정렬 알고리즘을 쓴다. // 보통 다른 언어는 reverse라는 이름으로 기능을 제공함.
+		// 
 		System.out.println(Arrays.toString(nums));
 
 		String[] names = { "홍길동", "아무개", "테스트", "유재석", "김철수", "나영희", "고길동" };

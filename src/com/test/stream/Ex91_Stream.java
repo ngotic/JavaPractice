@@ -435,9 +435,6 @@ public class Ex91_Stream {
 		list.sort(Comparator.naturalOrder());   // 오름차순 > 람다 객체랑 같다.
 		list.sort(Comparator.reverseOrder());   // 내림차순 > 객체
 		
-			
-		
-		
 		// distinct(), filter(), sorted() 세개 다쓴다. 
 		Data.getIntList().stream()
 						 .distinct()
